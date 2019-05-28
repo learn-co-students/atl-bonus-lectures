@@ -6,6 +6,18 @@
 
 --
 
+* Atlanta Bonus lectures are an experiment. They are ideal for exploring topics
+  we don't have time to cover in the normal curriculum. If there's a topic you'd
+  be interested in seeing covered please come talk to me!
+
+--
+
+* This week's topic is Legacy Code and how to test and refactor it.
+  * Today will likely be mostly testing, perhaps with a dash of refactoring at the end.
+  * Tomorrow will be heavy refactoring.
+
+--
+
 * This lecture is inspired by talks from Sandi Metz and James Dabbs.
 
 > If you like this lecture, I would strongly encourage you to watch their talks as well!
@@ -28,9 +40,9 @@
 
 --
 
-* Have a clear sense of why tests are not only important but necessary
-* Know working definitions of "Refactoring" and "Legacy Code"
+* Know working definitions of "Refactoring", "Legacy Code", and "Tech Debt"
 * See tools like: code coverage, watch commands
+* Be able to reason about what code is not currently tested
 * Be able to trap an execution path for refactoring
 
 --
@@ -53,31 +65,41 @@
 
 --
 
-* There is a class called GildedRose. Your boss says it has 6 skipped tests for a new feature that needs to be implemented. 
+* There is a class called GildedRose that people in the office whisper about.
 
 --
+
+* One day, your boss asks you to make some changes to GildedRose.
+
+--
+
+<img src="../images/gilded_rose1.png" width="50%" />
+
+* Huh, seems pretty reasonab...
+
+---
+
+### Task (cont)
+
+<img src="../images/gilded_rose2.png" width="80%" />
+
+---
+
+### Task (cont)
 
 * You look at the code and recoil in horror.
 
 --
 
-* All the engineers that knew anything about it have quit.
+* All the engineers that had detailed knowledge of the code have left the company.
 
 --
 
-* Figure out how to make the tests pass without going insane.
+* There are no tests.
 
 --
 
-### GildedRose
-
-1. See the tests: `open src/App.test.js`
-2. Run the tests: `yarn test`
-3. See the code:  `open src/App.js`
-
----
-
-### ... Quit Immediately? [y/n]
+* ... Quit Immediately? [y/n]
 
 ![lol-no](https://media.giphy.com/media/nLhdSinRtaL2E/giphy.gif)
 
@@ -93,10 +115,92 @@
 
 --
 
-### Two Steps to Beat Bad Code
+### Beating Bad Code
 
-1. Make the Change Easy (warning: this step might be hard)
-2. Make the Easy Change
+<img src="../images/kent_beck.png" width="80%" />
+
+---
+
+## Sidebar: Bad Code
+
+As programmers we spend a lot of time critiquing code. Bad code isn't just whatever we don't like.
+
+There are excellent books that talk about Object Oriented Design and Refactoring and how to recognize troubling patterns in code and take _systematic steps_ to fix them. Here are two:
+
+<img src="https://martinfowler.com/books/refact2.jpg" height="300px" style="float: left;" />
+<img src="https://static1.squarespace.com/static/537c0374e4b0f52ed92942e6/t/55be45b8e4b07e0f7544a464/1532370659007/?format=750w" height="300px" style="float: right;" />
+
+---
+
+## Legacy Code
+
+Legacy code is code that engineers no longer understand but still generates a profit.
+
+--
+
+Often it's messy and untested. There may have been _good reasons_ for the design. But there's no one left around to explain them.
+
+--
+
+**If** we try to change this code, we are compelled to disturb as little as possible to avoid breaking things. That means following the existing (bad) patterns and in turn compelling future programmers to do the same.
+
+--
+
+Our better option is to Refactor, making this code as clean and correct as possible before adding functionality.
+
+--
+
+But how do we know that our code does the same thing before _and_ after our refactoring? Tests are the only option. So we'll have to write some.
+
+---
+
+### A reminder on testing
+
+--
+
+There are different kinds of tests but often the most straightforward ones are unit tests.
+
+--
+
+Unit tests should only check one method at a time and only for one set of inputs and outputs.
+
+--
+
+To write them, I follow a pattern I like from Jim Weirich:
+
+--
+
+* Given some starting data, x  `x = Thing.new()`
+* When I run a method on it, y  `x.y(whatever)`
+* Then I expect to see a change, z  `expect(x.data).to eq(z)`
+
+---
+
+### Code Coverage
+
+--
+
+How confident are you that you could catch everything that needs to be tested?
+
+Probably not super confident.
+
+--
+
+That's why we have code coverage tools!
+
+--
+
+They tell us exactly which lines have been run by our tests. So we _know_ what code isn't tested.
+
+--
+
+I have an editor integration called "Code Coverage Gutters" that lets me display this in the file.
+
+---
+
+## Now Test The Hell Out Of It!
+
+# 😤😤😤
 
 ---
 
