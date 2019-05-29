@@ -33,39 +33,18 @@ describe "Gilded Rose" do
     expect(rose.sell_in).to eq(19)
   end
 
+  it "should lose two quality after the sell by date if it isn't brie" do
+    rose = GildedRose.new("example", 0, 12)
+    rose.tick
+    expect(rose.quality).to eq(10)
+    expect(rose.sell_in).to eq(-1)
+  end
+
   it "should increase quality of aged brie when we tick" do
     rose = GildedRose.new("Aged Brie", 20, 30)
     rose.tick
     expect(rose.quality).to eq(31)
     expect(rose.sell_in).to eq(19)
-  end
-
-  it "should increase quality for backstage passes" do
-    rose = GildedRose.new("Backstage passes to a TAFKAL80ETC concert", 20, 30)
-    rose.tick
-    expect(rose.quality).to eq(31)
-    expect(rose.sell_in).to eq(19)
-  end
-
-  it "should not modify sulfuras, hand of ragnaros for any reason" do
-    rose = GildedRose.new("Sulfuras, Hand of Ragnaros", 20, 30)
-    rose.tick
-    expect(rose.quality).to eq(30)
-    expect(rose.sell_in).to eq(20)
-  end
-
-  it "should bump quality by 2 when sell_in is 10 or less for backstage passes" do
-    rose = GildedRose.new("Backstage passes to a TAFKAL80ETC concert", 10, 20)
-    rose.tick
-    expect(rose.quality).to eq(22)
-    expect(rose.sell_in).to eq(9)
-  end
-
-  it "should bump quality by 3 for passes when sell_in is 5 or less" do
-    rose = GildedRose.new("Backstage passes to a TAFKAL80ETC concert", 5, 20)
-    rose.tick
-    expect(rose.quality).to eq(23)
-    expect(rose.sell_in).to eq(4)
   end
 
   it "should increase the quality of aged brie after the sell date" do
@@ -89,6 +68,34 @@ describe "Gilded Rose" do
     expect(rose.sell_in).to eq(-2)
   end
 
+  it "should increase quality for backstage passes" do
+    rose = GildedRose.new("Backstage passes to a TAFKAL80ETC concert", 20, 30)
+    rose.tick
+    expect(rose.quality).to eq(31)
+    expect(rose.sell_in).to eq(19)
+  end
+
+  it "should bump quality by 2 when sell_in is 10 or less for backstage passes" do
+    rose = GildedRose.new("Backstage passes to a TAFKAL80ETC concert", 10, 20)
+    rose.tick
+    expect(rose.quality).to eq(22)
+    expect(rose.sell_in).to eq(9)
+  end
+
+  it "should bump quality by 3 for passes when sell_in is 5 or less" do
+    rose = GildedRose.new("Backstage passes to a TAFKAL80ETC concert", 5, 20)
+    rose.tick
+    expect(rose.quality).to eq(23)
+    expect(rose.sell_in).to eq(4)
+  end
+
+  it "should not modify sulfuras, hand of ragnaros for any reason" do
+    rose = GildedRose.new("Sulfuras, Hand of Ragnaros", 20, 30)
+    rose.tick
+    expect(rose.quality).to eq(30)
+    expect(rose.sell_in).to eq(20)
+  end
+  
   it "should cap quality for passes at 50" do
     rose = GildedRose.new("Backstage passes to a TAFKAL80ETC concert", 20, 50)
     rose.tick
@@ -100,13 +107,6 @@ describe "Gilded Rose" do
     rose = GildedRose.new("Backstage passes to a TAFKAL80ETC concert", 0, 40)
     rose.tick
     expect(rose.quality).to eq(0)
-    expect(rose.sell_in).to eq(-1)
-  end
-
-  it "should lose two quality after the sell by date if it isn't brie" do
-    rose = GildedRose.new("example", 0, 12)
-    rose.tick
-    expect(rose.quality).to eq(10)
     expect(rose.sell_in).to eq(-1)
   end
 
