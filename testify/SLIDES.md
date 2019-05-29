@@ -204,6 +204,23 @@ I have an editor integration called "Code Coverage Gutters" that lets me display
 
 ---
 
+### Refactoring Time!
+
+Remember: Refactoring is about cleaning up the code to make
+future changes easier _without_ changing it's existing behavior!
+
+--
+
+Now that we have tests, your first instinct with this code may be
+to throw it away and start over. But refactoring is a series of many small steps.
+
+--
+
+At any point, we should feel confident stopping the refactoring and
+getting back to adding new features or working on a different part of the code.
+
+--
+
 ### You Won't Believe this one Refactoring Trick
 
 Refactoring the whole thing at once is a deathwish.
@@ -222,11 +239,13 @@ Now make those tests pass and repeat until you've broken the whole thing apart.
 
 ### Refactor Road
 
+Committing as we go, lets:
+
 1. Trap and fix Normal
 2. Trap and fix Brie
 3. Trap and fix Sulfuras
 4. Trap and fix Backstage
-5. Fix skipped tests?
+5. Fix skipped tests /  add bosses new feature. (Make the easy change.)
 
 --
 
@@ -240,37 +259,7 @@ Now, based on time, we can:
 
 --
 
-## 🎉🎉🎉🎉
-
----
-
-### A "Real World" Example for the Unconvinced
-
-At my last company, I worked with some very smart people including
-an engineer who is one of the [top 3 github contributors to Redux][redux].
-
-Basically, our app powered the house search on real estate agents websites.
-
-[redux]: https://github.com/reduxjs/redux/graphs/contributors
-
---
-
-One day, we were starting to see some performance issues with viewing Leads (visitors)
-I checked the Rails controller to see why it was slow and found [this][leads].
-
-[leads]: https://github.com/showcaseidx/ken/blob/880ba05dc3b785546168ea8205263f26ece49e0d/app/controllers/api/leads_controller.rb#L48
-
---
-
-The problem wound up being that a SQL query on a big table wasn't hitting an index.
-The important thing is it was _way_ harder to find because I had to deal with this
-code. We aren't bad programmers. What went wrong here?
-
---
-
-My answer: Programmers [follow the pattern][teams] that's already there. Just like looking up similar code when adding a new feature. And the more times you follow the pattern, the bigger it gets, so the harder it is to break away. At a certain point, the only way to "disobey" the pattern is to rip the thing up and start over.
-
-[teams]: https://github.com/showcaseidx/ken/blob/master/app/controllers/api/teams_controller.rb
+## 🎉🎉🎉🎉🎉
 
 ---
 
@@ -308,7 +297,7 @@ The only way I know of to refactor without fear is if you have tests.
   (Because eventually the changes needed are deep.)
 * Legacy Code is code that has been abandoned from an engineering perspective but is still in production.
 * By having tests and "redirecting" a segment of the functionality, we can rewrite in pieces without ever leaving the app committed in a broken state.
-* The code will get temporarily worse as you refactor since you have to add more code before you can delete the bad code.
+* The code will get temporarily worse as you refactor since you have to add more code to safely get to a point where the original code can be removed. (Maintaining behavior.)
 
 ---
 
@@ -316,9 +305,20 @@ The only way I know of to refactor without fear is if you have tests.
 
 ### Additional Resources
 
-[Sandi Metz - All The Little Things][sandi]
-[Institutional Memory and Reverse Smuggling][reverse-smuggling]
-[The parts of a test][rspec-given]
+#### Talks
+* [Sandi Metz - All The Little Things][sandi]
+* [James Dabbs - Refactoring Live][james]
+
+#### Books
+* [Refactoring by Martin Fowler](https://martinfowler.com/books/refactoring.html)
+* [99 Bottles of OOP](https://www.sandimetz.com/99bottles)
+* [Practical OO Design in Ruby](https://www.sandimetz.com/products-1-1)
+
+#### Etc
+* [Institutional Memory and Reverse Smuggling][reverse-smuggling]
+* [awesome-katas-1](https://github.com/gamontal/awesome-katas)
+* [awesome-katas-2](https://github.com/samjonester/awesome-katas)
+* [The parts of a test][rspec-given]
 
 [reverse-smuggling]: https://web.archive.org/web/20120207113424/http://wrttn.in/04af1a
 [rspec-given]: https://github.com/jimweirich/rspec-given#given
@@ -344,23 +344,3 @@ Esp code with:
 * No documentation
 * Few or no tests
 * No remaining engineers that understand the design
-
----
-
-#### BONUS ROUND!
-
-What would you do if there were no tests in the application?
-
---
-
-You have to start by writing tests. (Okay. How?)
-
---
-
-You know where the bad code is. Write as many tests as you can think of.
-Each one should build an instance of what you're trying to refactor, send it some data,
-and record the response. It doesn't matter why you get that response. Right now,
-there aren't tests so _the code is the single source of truth_!
-
-This is almost like you "manually snapshotting" the method like we saw with Sam yesterday.
-Finally, you can use "code coverage" tools to be sure you handled all the branches.
