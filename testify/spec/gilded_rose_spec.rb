@@ -110,28 +110,28 @@ describe "Gilded Rose" do
     expect(rose.sell_in).to eq(-1)
   end
 
-  xit "should lower quality by 2 for conjured mana cake" do
+  it "should lower quality by 2 for conjured mana cake" do
     rose = GildedRose.new("Conjured Mana Cake", 5, 10)
     rose.tick
     expect(rose.quality).to eq(8)
     expect(rose.sell_in).to eq(4)
   end
 
-  xit "should limit mana cake to a minimum quality of zero" do
+  it "should limit mana cake to a minimum quality of zero" do
     rose = GildedRose.new("Conjured Mana Cake", 5, 0)
     rose.tick
-    expect(rose.quality).to eq(10)
+    expect(rose.quality).to eq(0)
     expect(rose.sell_in).to eq(4)
   end
 
-  xit "should drop quality by 4 on the sell date for mana cake" do
+  it "should drop quality by 4 on the sell date for mana cake" do
     rose = GildedRose.new("Conjured Mana Cake", 0, 10)
     rose.tick
     expect(rose.quality).to eq(6)
     expect(rose.sell_in).to eq(-1)
   end
 
-  xit "should drop quality by 4 after the sell date for mana cake" do
+  it "should drop quality by 4 after the sell date for mana cake" do
     rose = GildedRose.new("Conjured Mana Cake", -1, 10)
     rose.tick
     expect(rose.quality).to eq(6)
