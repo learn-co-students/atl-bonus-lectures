@@ -8,18 +8,18 @@ class GildedRose
   end
 
   def tick
-    if name == 'example'
-      return example_tick
-    elsif name == 'Aged Brie'
+    if name == 'Aged Brie'
       return brie_tick
     elsif name == 'Backstage passes to a TAFKAL80ETC concert'
       return backstage_tick
     elsif name == 'Sulfuras, Hand of Ragnaros'
       return sulfuras_tick
+    else
+      normal_tick
     end
   end
 
-  def example_tick
+  def normal_tick
     @sell_in -= 1
     @quality -= 1
     @quality -= 1 if @sell_in <= 0
