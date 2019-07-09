@@ -17,6 +17,44 @@ class ComputerTest < MiniTest::Test
   end
 end
 
+class SmartComputerTest < MiniTest::Test
+  def test_smartcomputers_have_pieces
+    cpu = SmartComputer.new
+    assert_equal cpu.piece, 'O'
+  end
+
+  def test_smartcomputers_have_names
+    cpu = SmartComputer.new("Brit")
+    assert_equal cpu.name, 'Brit'
+  end
+
+  def test_smartcomputers_can_choose_a_move
+    board = Board.new(3)
+    cpu = SmartComputer.new
+    choice = cpu.get_move(board)
+    assert (1..9).include?(choice)
+  end
+
+  def test_smartcomputers_take_center_when_possible
+    board = Board.new(3)
+    cpu = SmartComputer.new
+    choice = cpu.get_move(board)
+    assert_equal cpu.get_move(board), 5
+  end
+
+  def test_smartcomputers_know_their_opponent
+    cpu = SmartComputer.new
+    assert_equal cpu.opponent, "X"
+  end
+
+  def test_smartcomputers_narrowly_avoid_death
+    board = Board.new(3, [1,'X',3,4,'X',6,7,8,9])
+    cpu = SmartComputer.new
+    choice = cpu.get_move(board)
+    assert_equal choice, 8
+  end
+end
+
 class SuperComputerTest < MiniTest::Test
   def setup
     @board = Board.new(3)
@@ -55,6 +93,15 @@ class BoardTest < MiniTest::Test
 
   def place_moves(*moves)
     moves.each { |x| @board.move!(x, @p1) }
+  end
+
+  def test_board_can_reveal_wins
+    assert @board.wins.is_a?(Array)
+  end
+
+  def test_can_list_player_indexes
+    board = Board.new(3, [1, "X", 3,  4, "X", 6, 7, 8, 9])
+    assert_equal board.indexes_for("X"), [1,4]
   end
 
   def test_boards_can_be_updated

@@ -2,7 +2,7 @@
 
 ## Tock and Negamax
 
-* [Brit Butler](https://twitter.com/redline6561)
+* [Brit Butler](https://twitter.com/king_cons)
 * May 20, 2015
 
 ---

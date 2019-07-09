@@ -1,13 +1,23 @@
 class Board
-  def initialize(n)
+  attr_reader :wins
+
+  def initialize(n, spaces=(1..n*n).to_a)
     @width = n
-    @spaces = (1..n*n).to_a
+    @spaces = spaces
     @wins = build_wins
   end
 
   def initialize_clone(original)
     super
     @spaces = original.instance_variable_get(:@spaces).clone
+  end
+
+  def indexes_for(piece)
+    result = []
+    @spaces.each_with_index do |space, index|
+      result << index if space == piece
+    end
+    result
   end
 
   def legal_moves
@@ -64,7 +74,7 @@ class Board
 
   private
   def build_wins
-    indexes = @spaces.map { |x| x - 1 }
+    indexes = (0..@spaces.length - 1).to_a
 
     wins = []
     # Rows first

@@ -1,6 +1,9 @@
+require 'set'
+
 require './board'
 require './computer'
 require './human'
+require './smartcomputer'
 require './supercomputer'
 
 class TicTacToe
