@@ -10,24 +10,43 @@ class SmartComputer
     piece == "X" ? "O" : "X"
   end
 
-  def almost_dead?(board)
+  def find_risk(board)
+    player_indexes = board.indexes_for(piece)
     opponent_indexes = board.indexes_for(opponent)
-    counter_move = nil
-    danger = board.wins.any? do |indexes|
-      shared = opponent_indexes.to_set & indexes.to_set
-      if shared.size == 2
-        counter_move = indexes.to_set - opponent_indexes.to_set
-      end
+    risk = board.wins.find do |indexes|
+      opponent_overlap = opponent_indexes.to_set & indexes.to_set
+      player_overlap = player_indexes.to_set & indexes.to_set
+      opponent_overlap.size == 2 && player_overlap.size.zero?
     end
-    danger ? counter_move.to_a.first + 1 : false
+  end
+
+  def almost_dead?(board)
+    risk = find_risk(board)
+    if risk
+      free_set = risk.to_set - board.indexes_for(opponent).to_set
+      free_set.to_a.first + 1
+    else
+      false
+    end
+  end
+
+  def open_center?(board)
+    board.legal_moves.include?(5)
+  end
+
+  def open_corners?(board)
+    (board.legal_moves.to_set & [1,3,7,9].to_set).size.positive?
   end
 
   def get_move(board)
     avoid_death = almost_dead?(board)
     if avoid_death
       avoid_death
-    elsif board.legal_moves.include?(5)
+    elsif open_center?(board)
       5
+    elsif open_corners?(board)
+      valid_corners = board.legal_moves.to_set & [1,3,7,9].to_set
+      valid_corners.sample
     else
       board.legal_moves.sample
     end
